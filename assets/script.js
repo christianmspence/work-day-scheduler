@@ -1,4 +1,6 @@
 
+
+
 //Show current day at top of page
 $("#currentDay").text(moment().format("MMMM Do YYYY"));
 
@@ -26,12 +28,31 @@ $("#hour17 .description").val(localStorage.getItem("hour17"));
 function hourTracker() {
     //get current hour
     var currentHour = moment().hour();
+    console.log(currentHour);
 
-    //loop through time blocks
+    //create a loop
     $(".time-block").each(function () {
-        var blockHour = parseInt($(this).attr("id").split("hours")[1]);
-        console.log(blockHour, currentHour);
+        var blockHour = parseInt($(this).attr("id").split("hour")[1]);
+
+        //change block color by comparing blockhour with current hour
+        if (blockHour < currentHour) {
+            $(this).addClass("past");
+            $(this).removeClass("future");
+            $(this).removeClass("present");
+        }
+        else if (blockHour === currentHour) {
+            $(this).removeClass("past");
+            $(this).addClass("present");
+            $(this).removeClass("future");
+        }
+        else {
+            $(this).removeClass("present");
+            $(this).removeClass("past");
+            $(this).addClass("future");
+        }
     })
 }
 
+
 hourTracker();
+
